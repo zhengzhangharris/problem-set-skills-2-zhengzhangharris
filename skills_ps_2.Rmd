@@ -1,0 +1,159 @@
+---
+title: "Skills Problem Set 2"
+author: "zheng_zhang"
+date: "2021/4/16"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale("LC_TIME","English")
+library("tidyverse")
+```
+
+This submission is my work alone and compies with the 30535 integrity policy
+
+# __1. Git concepts__
+
+> __git is software for distributed version control. List 4 benefits of distributed version control.For the next questions, we will reference “Learn git concepts, not commands”. Read sections from “Overview” through “Branching”. It is written with git command-line in mind, but github desktop has all these features as well. Focus on the concepts (ie understand the pictures). Save some changes to your homework and make sure it’s being tracked by git with github deskop.__
+
+> __1. What is the remote repository for this homework? Be as specific as possible.__
+
+  
+> __2. How do you add a file to staging in github desktop? (This is subtle, because it happens automatically).__
+
+
+> __3. How do you commit an issue to the local repository? (This is not subtle).__
+
+
+> __4. How does github desktop decide what part of your code to show in the main part of the window?__
+
+
+> __5. What branch are you on right now? Why?__
+
+
+> __6. If you were to click on “current branch”, type a name and click the “New Branch” button, you would create a new branch.__
+
+>> __a. What would happen to the files in your working directory?__
+
+>> __b. What would happens in the remote repo?__
+
+>> __c. What changes,if anything?__
+
+>> __d. Why would you want to work on a diferent branch?__
+
+> __7.	If you created a new branch in the previous step, nice! Experimentation develops your skills and understanding. Now, make sure you are on master as you continue your homework.__
+
+
+# __2. Fun with dplyr__
+
+## 2.1 Debugging mindset (5 pts)
+
+> __1. Why does this code doesn’t work?__
+
+> __2. Fix the following code so it works__
+
+> __3. Press Alt (Option) + Shift + K. What happens? How can you get to the same place using the menus?__
+
+## 2.2 Filter (15 points)
+
+> __1. Using the polls_us_election_2016 data frame in the dslabspackage find the following__
+
+>> __1.	Polls for the states of Hawaii and Alaska__
+
+>> __2.	Polls with sample sizes bigger than 500 people__
+
+>> __3.	Polls run by YouGov, Google Consumer Surveys or SurveyMonkey__
+
+>> __4.	Polls with A+ grade and percentage for Trump less than 30__
+
+>> __5.	Polls where the adjusted percentage for Clinton is between 40 and 60 percent (inclusive)__
+
+>> __6.	Polls where Trump raw winning margin over Clinton is bigger than 10%__
+
+>> __7.	Polls where McMullin percentage is more than 5 %__
+
+> __2. Remember this graph from last problem set? There is a poll after January where Trump percentage is above 60 with no grade. What poll is that one?__
+
+>> __1.	Common bugs: You want to see missing values in a dataframe. You run the following code and get no results. Why is wrong?__  
+ *filter(polls_us_election_2016, grade == NA)*
+
+>> __2.	How many polls have missing rawpoll_mcmullin? Why do you think this is happening?__
+
+>> __3.	What happens to observations with missing values in grade when you filter by grade == "A"? Why?(Hint: compare "C-" == "A", "A" == "A", and NA == "A").__
+
+>> __4.	What does NA | TRUE evaluate to? Why?__
+
+>> __5.	What does FALSE & NA evaluate to? Why?__
+
+## 2.3 Select (10 points)
+
+> __1.	What happens if you include the name of a variable multiple times in a select() call?__
+
+> __2.	Typically, R is case-sensitive, but select helpers ignore case by default. Change the default to return an empty tibble.__  *select(polls_us_election_2016, contains("RAW"))*
+
+> __3.	Brainstorm as many distinct ways as possible to select *rawpoll_clinton*, *rawpoll_trump*, *adjpoll_clinton*, and *adjpoll_trump*__
+
+
+
+# __3. Arrange (5 pts)__
+
+> __1.	Sort polls to find the ones where Clinton’s percentage is the highest. Use %>% head(1) to print just one row.__
+
+> __2.	Find the 5 polls that interview more people. Only show pollster, samplesize, population, and grade.__
+
+> __3.	How could you use *arrange()* to sort all missing values to the start? (Hint use is.na(), you can use any variable with missing values here)__
+
+
+# __4. Mutate (15 pts)__
+
+> __1.	Currently the variables rawpoll_candidate tells the percentage for that candidate.l Convert each of them in number of people that pick that candidate. Store them in variables raw_candidate.__
+
+> __2.	Make a plot for the variable samplesize - (raw_trump + raw_clinton).__
+
+> __3.	We expect that samplesize - (raw_trump + raw_clinton) will be near zero for all polls. Why is this not happening?__
+
+> __4.	How can you fix the problem in the last graph so that samplesize - (raw_trump + raw_clinton) is closer to zero?__
+
+> __5.	Does your fix from the last question solve the problem? If not, discuss what might be happening and why we still see big di˙erences between the sample size and the sum of all the quantities.__
+
+> __6.	Find the 7 polls where Johnson percentage is the highest using the ranking function. How do you want to handle ties? Carefully read the documentation for min_rank()__
+
+# __5. Summarise (15 pts)__
+
+> __1. How many polls each company is running? Come up with at least two di˙erent ways to get to the same result__
+
+> __2.	Calculate average poll size by grade for the state of Florida.__
+
+> __3.	Do all the polls by the same company have the same grade?__
+
+> __4.	Which state has the higher average vote for other (Mcmullin) candidates? Why do you think this is the case?__
+
+> __5.	Find all the states were more than 10 di˙erent companies ran polls. Order the results from most polling companies to fewest.__
+
+> __6.	Calculate the number of poll by grade and type of population. Add to your results the *max()* and *min()* percentage for Trump that each type of poll has. Report your results so that better grades are at the top of your table.__
+
+> __7.	How many poll companies are running polls in Alabama and Arkansas? Which of these companies are ONLY running polls in Alabama or Arkansas and how many polls are they running?__
+
+
+# __6. Practical Application (15 pts)__
+> We are interested in how good di˙erent pollsters were at predicting the actual election results. The popular vote result was 48.2% for Clinton and 46.1% for Trump across the US. Let’s see which pollsters got closer results. We are interested in how close the spread (the di˙erence between the proportion of the two candidates 0.482 − 0.461 = 0.021) of each poll was to the real one. We will be using polls for the whole country that ended on or after October 31 (enddate >= "2016-10-31")
+
+> __a. Calculate the spread for each poll and show the mean spread by pollster__
+
+> __b. Assume that there are only two parties so that *spread = 2 * p − 1*. Construct a 95% confidence interval between the two main candidates on election day.__
+
+>> __a.	Calculate the variable *p* __
+
+>> __b.	Calculate the standard deviation of *p*. Why is this formula true in this particular case ? __
+
+>> __c. Finally calculate the lower and upper confidence interval for the spread. Remember *ci = spread ± qnorm(0.975) sd(spread)*. Why is this true?
+
+> __Calculate an error variable, the di˙erence between the poll spread and the actual spread from the election. Plot this error by pollster. Flip the pollster names, otherwise your graph will be impossible to read. You already did something similar in the last pset. From this graph you can see which pollster under, over or overall predicted the election night spread.__
+
+
+
+
